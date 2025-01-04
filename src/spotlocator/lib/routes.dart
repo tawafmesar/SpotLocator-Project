@@ -6,6 +6,7 @@ import 'package:spotlocator/view/screen/auth/login.dart';
 import 'package:spotlocator/view/screen/auth/signup.dart';
 import 'package:spotlocator/view/screen/auth/success_signup.dart';
 import 'package:spotlocator/view/screen/auth/verifycodesignup.dart';
+import 'package:spotlocator/view/screen/home.dart';
 import 'package:spotlocator/view/screen/spalsh_screen.dart';
 import 'package:spotlocator/view/screen/test_screen.dart';
 
@@ -29,6 +30,8 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoute.successSignUp, page: () => const SuccessSignUp()),
   GetPage(name: AppRoute.verfiyCodeSignUp, page: () => const VerfiyCodeSignUp()),
   GetPage(name: AppRoute.test, page: () => const Test()),
+
+  GetPage(name: AppRoute.home, page: () => const HomeScreen()),
 
 
 
