@@ -11,6 +11,8 @@ class AppRoute {
   static const String test = "/test";
   static const String splash = "/splash";
 
+  static const String home = "/home";
+
 
 
 }
