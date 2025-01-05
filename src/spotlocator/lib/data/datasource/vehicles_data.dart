@@ -18,4 +18,15 @@ class VehiclesData {
 
 
 
+  postdata(String plate_number ,String vehicle_desc ,String vehicle_type ,String vehicle_userid ) async {
+    var response = await crud.postData(AppLink.vehicleAdd, {
+      "plate_number" : plate_number ,
+      "vehicle_desc" : vehicle_desc  ,
+      "vehicle_type" : vehicle_type ,
+      "vehicle_userid" : vehicle_userid  ,
+    });
+    return response.fold((l) => l, (r) => r);
+  }
+
+
 }

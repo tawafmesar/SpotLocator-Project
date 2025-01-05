@@ -30,6 +30,7 @@ class AppLink {
 
   static const String vehicleview = "$server/vehicle/view.php"  ;
 
+  static const String vehicleAdd = "$server/vehicle/add.php"  ;
 
 
 

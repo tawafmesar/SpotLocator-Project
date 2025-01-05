@@ -133,6 +133,14 @@ class VehicleScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.gotoaddvehicle();
+        },
+        backgroundColor: AppColor.primaryColor,
+        child: const Icon(Icons.add_circle_outline_sharp,color: Colors.white,),
+      ),
+
     );
   }
 

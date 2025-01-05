@@ -2,6 +2,7 @@ import 'package:spotlocator/data/models/vehicle_model.dart';
 import 'package:get/get.dart';
 
 import '../core/class/statusrequest.dart';
+import '../core/constant/routes.dart';
 import '../core/functions/handingdatacontroller.dart';
 
 import '../core/services/services.dart';
@@ -62,5 +63,10 @@ class VehiclesControllerImp extends VehiclesController {
     update();
   }
 
+  gotoaddvehicle(){
+
+    Get.toNamed(AppRoute.addvehicleScreen);
+
+  }
 
 }
