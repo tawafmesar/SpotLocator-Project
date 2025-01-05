@@ -9,6 +9,7 @@ import 'package:spotlocator/view/screen/auth/verifycodesignup.dart';
 import 'package:spotlocator/view/screen/home.dart';
 import 'package:spotlocator/view/screen/spalsh_screen.dart';
 import 'package:spotlocator/view/screen/test_screen.dart';
+import 'package:spotlocator/view/screen/vehicle.dart';
 
 import 'core/constant/routes.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,7 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoute.test, page: () => const Test()),
 
   GetPage(name: AppRoute.home, page: () => const HomeScreen()),
+  GetPage(name: AppRoute.home, page: () => const VehicleScreen()),
 
 
 

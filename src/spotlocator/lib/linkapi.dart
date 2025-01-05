@@ -26,6 +26,12 @@ class AppLink {
 
 
 
+// ================================= Vehicle ========================== //
+
+  static const String vehicleview = "$server/vehicle/view.php"  ;
+
+
+
 
 
 
