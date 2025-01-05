@@ -7,6 +7,7 @@ import '../../controller/vehicle_controller.dart';
 import '../../core/class/handlingdataview.dart';
 import '../../core/constant/color.dart';
 import '../../linkapi.dart';
+import '../widget/add_vehicle_bottom_sheet.dart';
 import '../widget/custom_app_bar.dart';
 
 class VehicleScreen extends StatelessWidget {
@@ -135,7 +136,7 @@ class VehicleScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          controller.gotoaddvehicle();
+          AddVehicleBottomSheet(context);
         },
         backgroundColor: AppColor.primaryColor,
         child: const Icon(Icons.add_circle_outline_sharp,color: Colors.white,),

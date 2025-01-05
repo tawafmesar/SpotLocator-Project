@@ -1,4 +1,3 @@
-import 'package:spotlocator/view/screen/addvehicle.dart';
 import 'package:spotlocator/view/screen/auth/forgetpassword/forgetpassword.dart';
 import 'package:spotlocator/view/screen/auth/forgetpassword/resetpassword.dart';
 import 'package:spotlocator/view/screen/auth/forgetpassword/success_resetpassword.dart';
@@ -32,10 +31,8 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoute.successSignUp, page: () => const SuccessSignUp()),
   GetPage(name: AppRoute.verfiyCodeSignUp, page: () => const VerfiyCodeSignUp()),
   GetPage(name: AppRoute.test, page: () => const Test()),
-
   GetPage(name: AppRoute.home, page: () => const HomeScreen()),
   GetPage(name: AppRoute.vehicle, page: () => const VehicleScreen()),
-  GetPage(name: AppRoute.addvehicleScreen, page: () => const AddVehicleScreen()),
 
 
 

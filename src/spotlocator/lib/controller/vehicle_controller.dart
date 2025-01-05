@@ -1,21 +1,34 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:spotlocator/data/models/vehicle_model.dart';
 import 'package:get/get.dart';
-
 import '../core/class/statusrequest.dart';
-import '../core/constant/routes.dart';
 import '../core/functions/handingdatacontroller.dart';
-
 import '../core/services/services.dart';
 import '../data/datasource/vehicles_data.dart';
-import '../linkapi.dart';
 
 abstract class VehiclesController extends GetxController {
 
 }
 
 class VehiclesControllerImp extends VehiclesController {
+  GlobalKey<FormState> formstate = GlobalKey<FormState>();
+
+  late TextEditingController plate_number;
+  late TextEditingController vehicle_desc;
+  late TextEditingController vehicle_type;
+
 
   MyServices myServices = Get.find();
+
+
+  bool showFormFields = false;
+
+  void selectVehicleType(String type) {
+    vehicle_type.text = type;
+    showFormFields = true;
+    update();
+  }
 
   String? users_id;
   StatusRequest statusRequest = StatusRequest.none;
@@ -27,17 +40,94 @@ class VehiclesControllerImp extends VehiclesController {
 
 
 
+  @override
+  AddVehicle() async {
+      print('plate_number.............. $plate_number');
+      print('plate_number.............. $vehicle_desc');
+
+      print('plate_number.............. $vehicle_type');
+      print('plate_number.............. $users_id');
+
+      if (formstate.currentState!.validate()) {
+        statusRequest = StatusRequest.loading;
+        update();
+        try{
+        var response = await vehiclesData.postdata(
+            plate_number.text, vehicle_desc.text, vehicle_type.text, users_id!);
+        print("=============================== Controller $response ");
+        statusRequest = handlingData(response);
+        if (StatusRequest.success == statusRequest) {
+          if (response['status'] == "success") {
+
+            _navigateTobackScreen(
+              "Success",
+              "The Metric has been added successfully.",
+            );
+
+            plate_number.clear();
+            vehicle_desc.clear();
+            vehicle_type.clear();
+
+            await getVehiclesdata();
+
+          } else {
+            _navigateTobackScreen(
+              "Notification",
+              "Sorry, your Vehicle could not be added.",
+            );
+            statusRequest = StatusRequest.failure;
+
+          }
+
+        }
+
+      } catch (e) {
+    print("Error while adding Metric: $e");
+    statusRequest = StatusRequest.serverfailure;
+    }
+
+        update();
+      } else {
+        Get.snackbar(
+          "Error",
+          "You must select a vehicle type.",
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.all(10),
+          duration: const Duration(seconds: 3),
+        );
+        _navigateTobackScreen(
+          "Notification",
+          "Sorry, You must Enter Plate and description.",
+        );
+
+      }
+      update();
+
+  }
+
 
 
   @override
   void onInit() {
+    plate_number = TextEditingController() ;
+    vehicle_desc = TextEditingController();
+    vehicle_type = TextEditingController();
     users_id = myServices.sharedPreferences.getString("id") ;
     getVehiclesdata();
     super.onInit();
-
-    // print("placesid ...................................");
-    // print(placesid);
   }
+
+  @override
+  void dispose() {
+    plate_number.dispose();
+    vehicle_desc.dispose();
+    vehicle_type.dispose();
+    super.dispose();
+  }
+
+
 
 
 
@@ -63,9 +153,16 @@ class VehiclesControllerImp extends VehiclesController {
     update();
   }
 
-  gotoaddvehicle(){
+  Future<void> _navigateTobackScreen(String title, String middleText) async {
+    Get.defaultDialog(
+      title: title,
+      middleText:  middleText,
+    );
 
-    Get.toNamed(AppRoute.addvehicleScreen);
+    await Future.delayed(Duration(seconds: 3));
+
+    Get.back();
+    Get.back();
 
   }
 
