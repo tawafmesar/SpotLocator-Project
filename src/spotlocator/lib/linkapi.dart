@@ -29,9 +29,11 @@ class AppLink {
 // ================================= Vehicle ========================== //
 
   static const String vehicleview = "$server/vehicle/view.php"  ;
-
   static const String vehicleAdd = "$server/vehicle/add.php"  ;
 
+
+  static const String vehicleactive = "$server/vehicle/active.php"  ;
+  static const String vehicleremove = "$server/vehicle/remove.php"  ;
 
 
 

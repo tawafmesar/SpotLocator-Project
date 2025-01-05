@@ -153,6 +153,57 @@ class VehiclesControllerImp extends VehiclesController {
     update();
   }
 
+
+
+  @override
+  remove(String id) async {
+    print("=============================== id $id ");
+    print(id);
+    statusRequest = StatusRequest.loading;
+    var response = await vehiclesData.removedata(id);
+    print("=============================== Controller $response ");
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['status'] == "success") {
+
+        _navigateTobackScreen("Success" ,"The vehicle was Deleted successfully" );
+       await getVehiclesdata();
+        update();
+
+      } else {
+        statusRequest = StatusRequest.failure;
+      }
+    }
+    update();
+
+  }
+
+
+  @override
+  active(String id) async {
+    print("=============================== id $id ");
+    print(id);
+    statusRequest = StatusRequest.loading;
+    var response = await vehiclesData.activedata(id,users_id!);
+    print("=============================== Controller $response ");
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['status'] == "success") {
+
+        _navigateTobackScreen("Success" ,"The vehicle was Active successfully" );
+       await getVehiclesdata();
+
+        update();
+
+      } else {
+        statusRequest = StatusRequest.failure;
+      }
+    }
+    update();
+
+  }
+
+
   Future<void> _navigateTobackScreen(String title, String middleText) async {
     Get.defaultDialog(
       title: title,

@@ -15,6 +15,20 @@ class VehiclesData {
 
 
 
+  removedata(String id) async {
+    var response = await crud.postData(AppLink.vehicleremove, {
+      "id" : id });
+    return response.fold((l) => l, (r) => r);
+  }
+
+  activedata(String id, String user_id ) async {
+    var response = await crud.postData(AppLink.vehicleactive, {
+      "id" : id,
+      "user_id" : user_id,
+    });
+    return response.fold((l) => l, (r) => r);
+  }
+
 
 
 
