@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotlocator/core/constant/color.dart';
 
 class CustonTextFormAuth extends StatelessWidget {
   final String hinttext;
@@ -10,43 +11,53 @@ class CustonTextFormAuth extends StatelessWidget {
   final bool? obscureText;
   final void Function()? onTapIcon;
 
-  const CustonTextFormAuth(
-      {Key? key,
-        this.obscureText,
-        this.onTapIcon,
-        required this.hinttext,
-        required this.labeltext,
-        required this.iconData,
-        required this.mycontroller,
-        required this.valid,
-        required this.isNumber
-      })
-      : super(key: key);
+  const CustonTextFormAuth({
+    Key? key,
+    this.obscureText,
+    this.onTapIcon,
+    required this.hinttext,
+    required this.labeltext,
+    required this.iconData,
+    required this.mycontroller,
+    required this.valid,
+    required this.isNumber,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: AppColor.backgroundcolor,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: TextFormField(
         keyboardType: isNumber
             ? const TextInputType.numberWithOptions(decimal: true)
             : TextInputType.text,
         validator: valid,
         controller: mycontroller,
-        obscureText: obscureText == null || obscureText == false  ? false : true,
+        obscureText: obscureText == true,
         decoration: InputDecoration(
-            hintText: hinttext,
-            hintStyle: const TextStyle(fontSize: 14),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-            label: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 9),
-                child: Text(labeltext)),
-            suffixIcon: InkWell(child: Icon(iconData), onTap: onTapIcon),            border:
-        OutlineInputBorder(borderRadius: BorderRadius.circular(10),)
-        )
-        ,
+          hintText: hinttext,
+          hintStyle: const TextStyle(fontSize: 14),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 30,
+          ),
+          label: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 9),
+            child: Text(labeltext),
+          ),
+          suffixIcon: InkWell(
+            child: Icon(iconData),
+            onTap: onTapIcon,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
       ),
     );
   }
