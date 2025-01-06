@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     Center(child: Text('Home Page', style: TextStyle(fontSize: 24))),
-    Center(child: Text('Parking Page', style: TextStyle(fontSize: 24))),
+    Center(child: Text('Parking', style: TextStyle(fontSize: 24))),
     VehicleScreen(),
     Center(child: Text('Profile Page', style: TextStyle(fontSize: 24))),
   ];
