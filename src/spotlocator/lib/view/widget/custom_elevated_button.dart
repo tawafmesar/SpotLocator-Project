@@ -25,7 +25,7 @@ class CustomElevatedButton extends StatelessWidget {
             Color(0xFF0062CA),
           ],
         ),
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: ElevatedButton.icon(
         onPressed: onPressed,

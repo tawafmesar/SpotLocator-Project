@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../core/class/statusrequest.dart';
 import '../core/constant/parkinglot.dart';
 import '../core/constant/routes.dart';
 import '../core/functions/handingdatacontroller.dart';
 import '../core/services/services.dart';
-
+import 'package:spotlocator/data/models/vehicle_model.dart';
 import '../data/datasource/parkinglot_data.dart';
 import '../data/datasource/vehicles_data.dart';
 import '../data/models/department_model.dart';
@@ -23,7 +22,6 @@ class ParkingLotControllerImp extends ParkingLotController {
 
   String? users_id;
   String? vehicleIds;
-  bool activitreservation = true;
   String allReservationCount = '0';
 
   String? allReservationCountshared;
@@ -49,6 +47,7 @@ class ParkingLotControllerImp extends ParkingLotController {
   String searchQuery = '';
   int? selectedDeptId; // null means 'All'
   List<Department> departments = [];
+  List vehicles = [];
 
   @override
   void onInit() {
@@ -148,12 +147,13 @@ class ParkingLotControllerImp extends ParkingLotController {
 
   @override
   addreservation(String parkingid) async {
-    if (vehicleIds != null) {
+    if (vehicle_id != null) {
       print("=============================== parkingid  ");
       print(parkingid);
       print("=============================== vehicleIds  ");
-      print(vehicleIds);
-      print(vehicleIds.runtimeType);
+      print("=============================== vehicleIds  $vehicle_id.text ");
+      print(vehicle_id.text );
+
       statusRequest = StatusRequest.loading;
 
       update();
@@ -167,8 +167,6 @@ class ParkingLotControllerImp extends ParkingLotController {
           _navigateToback2Screen();
           update();
         } else {
-          //          Get.defaultDialog(title: "Error", middleText: " ");
-          getparkinglot();
 
           _navigateTobackScreen('Error', 'This vehicle have previous reservation ');
           //statusRequest = StatusRequest.failure;
@@ -183,31 +181,25 @@ class ParkingLotControllerImp extends ParkingLotController {
 
   @override
   getVehiclesdata() async {
-    vehiclesdata.clear();
+    vehicles.clear();
     statusRequest = StatusRequest.loading;
     var response = await vehiclesData.getdata(users_id!);
     print("=============================== Controller $response ");
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['status'] == "success") {
-        List<dynamic> responsedata = response['data'];
-        for (var item in responsedata) {
-          String vehicleId = item['vehicle_id'].toString();
-          String vehicleName = item['plate_number'];
-          vehiclesdata.add(vehicleName);
-          vehivleseMap[vehicleName] = vehicleId;
-        }
-        print("vehiclesdata......................................");
-        print(vehiclesdata);
 
-        print("vehivleseMap......................................");
-        print(vehivleseMap);
+        vehicles.addAll(response['data'].map((e) => vehicle_model.fromJson(e)).toList());
+        print(vehicles);
+
+
       } else {
         statusRequest = StatusRequest.failure;
       }
     }
     update();
   }
+
 
   Future<void> _navigateTobackScreen(String title, String middletext) async {
     Get.defaultDialog(

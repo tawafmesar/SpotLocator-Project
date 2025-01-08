@@ -18,7 +18,7 @@ class ParkingLotData {
   addreservationdata(String vehicle_id ,String parkinglot_id  ) async {
     var response = await crud.postData(AppLink.addreservation, {
       "vehicle_id" : vehicle_id ,
-      "parkinglot_id" : parkinglot_id  ,
+      "parkingspot_id" : parkinglot_id  ,
     });
     return response.fold((l) => l, (r) => r);
   }

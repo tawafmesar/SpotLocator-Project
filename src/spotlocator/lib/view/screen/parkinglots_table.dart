@@ -8,6 +8,7 @@ import '../../controller/vehicle_controller.dart';
 import '../../core/class/handlingdataview.dart';
 import '../../core/constant/color.dart';
 import '../../linkapi.dart';
+import '../widget/book_spot_bottom_sheet.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/custom_elevated_button.dart';
 
@@ -219,8 +220,11 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                                           Center(
                                             child: CustomElevatedButton(
                                               onPressed: () {
-                          }
-                                              ,
+                                                controller.vehicle_id.clear();
+                                                showBottomSheetBoxSpot(
+                                                    context, parkingSpot.parkingspotId.toString()
+                                                );
+                                              } ,
                                               icon: Icons.book_online,
                                               text: 'Book Now',
                                             ),

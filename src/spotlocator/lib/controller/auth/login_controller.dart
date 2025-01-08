@@ -59,7 +59,7 @@ class LoginControllerImp extends LoginController {
             myServices.sharedPreferences
                 .setString("users_role", response['data']['users_role'].toString());
             myServices.sharedPreferences.setString("step", "2");
-            Get.offNamed(AppRoute.test);
+            Get.offNamed(AppRoute.home);
           } else {
             Get.toNamed(AppRoute.verfiyCodeSignUp,
                 arguments: {"email": email.text});

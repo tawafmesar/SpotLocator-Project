@@ -14,6 +14,7 @@ import '../../widget/auth/customtexttitleauth.dart';
 import 'package:get/get.dart';
 
 import '../../widget/auth/textsignup.dart';
+import '../../widget/custom_elevated_button.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -78,10 +79,14 @@ class Login extends StatelessWidget {
                         textAlign: TextAlign.right,
                       ),
                     ),
-                    CustomButtomAuth(
+                    const SizedBox(height: 10),
+
+                    CustomElevatedButton(
+                      icon: Icons.login,
                       text: "Login",
                       onPressed: controller.login,
-                    ),
+                    )
+                   ,
                     const SizedBox(height: 40),
                     CustomTextSignUpOrSignIn(
                       textone: "Don't have an account? ",
