@@ -219,6 +219,7 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                                           const SizedBox(height: 5),
                                           Center(
                                             child: CustomElevatedButton(
+                                              radius: 25.0,
                                               onPressed: () {
                                                 controller.vehicle_id.clear();
                                                 showBottomSheetBoxSpot(

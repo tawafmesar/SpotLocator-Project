@@ -36,7 +36,8 @@ CREATE TABLE `department` (
 
 INSERT INTO `department` (`dept_id`, `dept_name`, `dept_short`, `dept_image`) VALUES
 (1, 'Parking Department 1', 'PDept1', 'dept1.png'),
-(2, 'Parking Department 2', 'PDept2', 'dept2.png');
+(2, 'Parking Department 2', 'PDept2', 'dept2.png'),
+(3, 'Parking Department 3', 'PDept3', 'dept3.png');
 
 -- --------------------------------------------------------
 
@@ -57,10 +58,9 @@ CREATE TABLE `parkingreservation` (
 --
 
 INSERT INTO `parkingreservation` (`reservation_id`, `reservation_date`, `reservation_status`, `vehicle_id`, `parkingspot_id`) VALUES
-(1, '2025-01-06 01:06:31', 0, 7, 3),
-(2, '2025-01-06 22:23:17', 0, 4, 5),
-(3, '2025-01-06 22:24:20', 0, 2, 5),
-(6, '2025-01-06 22:30:03', 0, 1, 5);
+(1, '2025-01-07 00:45:56', 0, 2, 3),
+(10, '2025-01-08 01:41:28', 0, 1, 5),
+(11, '2025-01-08 01:42:50', 0, 6, 4);
 
 -- --------------------------------------------------------
 
@@ -82,18 +82,38 @@ CREATE TABLE `parkingspot` (
 --
 
 INSERT INTO `parkingspot` (`parkingspot_id`, `spot_name`, `dept_id`, `spot_status`, `latitude`, `longitude`) VALUES
-(3, '101', 1, 1, '16.930037', '42.622977'),
+(3, '101', 1, 0, '16.930037', '42.622977'),
 (4, '102', 1, 1, '16.930013', '42.622974'),
 (5, '103', 1, 1, '16.929989', '42.622969'),
 (6, '104', 1, 1, '16.929963', '42.622965'),
-(7, '105', 1, 1, '16.929938', '42.622958'),
+(7, '105', 1, 0, '16.929938', '42.622958'),
 (8, '106', 1, 1, '16.929912', '42.622957'),
 (9, '107', 1, 1, '16.929916', '42.622907'),
 (10, '108', 1, 1, '16.929942', '42.622911'),
 (11, '109', 1, 1, '16.929973', '42.622919'),
 (12, '110', 1, 1, '16.929997', '42.622921'),
 (13, '111', 1, 1, '16.930021', '42.622921'),
-(14, '112', 1, 1, '16.930046', '42.622923');
+(14, '112', 1, 1, '16.930046', '42.622923'),
+(15, '201', 2, 0, '16.930050', '42.622925'),
+(16, '202', 2, 1, '16.930070', '42.622940'),
+(17, '203', 2, 0, '16.930090', '42.622955'),
+(18, '204', 2, 1, '16.930110', '42.622970'),
+(19, '205', 2, 0, '16.930130', '42.622985'),
+(20, '206', 2, 1, '16.930150', '42.623000'),
+(21, '207', 2, 0, '16.930170', '42.623015'),
+(22, '208', 2, 1, '16.930190', '42.623030'),
+(23, '209', 2, 0, '16.930210', '42.623045'),
+(24, '210', 2, 1, '16.930230', '42.623060'),
+(25, '301', 3, 0, '16.930250', '42.623075'),
+(26, '302', 3, 1, '16.930270', '42.623090'),
+(27, '303', 3, 0, '16.930290', '42.623105'),
+(28, '304', 3, 1, '16.930310', '42.623120'),
+(29, '305', 3, 0, '16.930330', '42.623135'),
+(30, '306', 3, 1, '16.930350', '42.623150'),
+(31, '307', 3, 0, '16.930370', '42.623165'),
+(32, '308', 3, 1, '16.930390', '42.623180'),
+(33, '309', 3, 0, '16.930410', '42.623195'),
+(34, '310', 3, 1, '16.930430', '42.623210');
 
 -- --------------------------------------------------------
 
@@ -198,19 +218,19 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `parkingreservation`
 --
 ALTER TABLE `parkingreservation`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `parkingspot`
 --
 ALTER TABLE `parkingspot`
-  MODIFY `parkingspot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `parkingspot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `users`

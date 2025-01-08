@@ -101,6 +101,7 @@ void AddVehicleBottomSheet(BuildContext context) {
                   Center(
                     child:
                     CustomElevatedButton(
+                      radius: 25.0,
                       text: "Add Vehicle",
                       icon: Icons.directions_car,
                       onPressed: () {

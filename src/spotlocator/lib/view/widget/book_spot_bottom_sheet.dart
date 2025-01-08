@@ -83,6 +83,7 @@ void showBottomSheetBoxSpot(BuildContext context, String parkigid) {
                   Center(
                     child:
                     CustomElevatedButton(
+                      radius:25.0,
                       text: "Reserve Spot",
                       icon: Icons.directions_car,
                       onPressed: () {
