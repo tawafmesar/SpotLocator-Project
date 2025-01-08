@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotlocator/view/screen/parkinglots_table.dart';
 import 'package:spotlocator/view/screen/vehicle.dart';
 import '../../core/constant/color.dart';
 import '../widget/custom_app_bar.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     Center(child: Text('Home Page', style: TextStyle(fontSize: 24))),
-    Center(child: Text('Parking Page', style: TextStyle(fontSize: 24))),
+    ParkinglotsTable(),
     VehicleScreen(),
     Center(child: Text('Profile Page', style: TextStyle(fontSize: 24))),
   ];

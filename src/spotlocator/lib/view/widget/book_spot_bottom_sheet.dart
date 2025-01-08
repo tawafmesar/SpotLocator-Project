@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import '../../controller/vehicle_controller.dart';
+import '../../controller/parkinglot_controller.dart';
 import '../../core/class/handlingdataview.dart';
 import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
-import '../../core/functions/validinput.dart';
-import '../widget/auth/customtextformauth.dart';
+import '../widget/auth/custombuttonauth.dart';
 import 'custom_elevated_button.dart';
 
-void AddVehicleBottomSheet(BuildContext context) {
+void showBottomSheetBoxSpot(BuildContext context, String parkigid) {
+  String? parkig_id = parkigid;
+
   Get.bottomSheet(
-    backgroundColor: Color(0xffEAF8FB),
+    backgroundColor: const Color(0xffEAF8FB),
     Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: GetBuilder<VehiclesControllerImp>(
+      child: GetBuilder<ParkingLotControllerImp>(
         builder: (controller) => SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
@@ -30,7 +31,7 @@ void AddVehicleBottomSheet(BuildContext context) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Add Vehicle',
+                        'Reserve Parking Spot',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -52,12 +53,13 @@ void AddVehicleBottomSheet(BuildContext context) {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10,),
-                  Divider(height: 2,color: AppColor.primaryColor,),
+                  const SizedBox(height: 10),
+                  const Divider(height: 2, color: AppColor.primaryColor),
                   const SizedBox(height: 10),
 
+                  // Vehicle Selection
                   const Text(
-                    "Select Vehicle Type",
+                    "Select a Vehicle",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
@@ -67,48 +69,28 @@ void AddVehicleBottomSheet(BuildContext context) {
                   const SizedBox(height: 10),
                   SizedBox(
                     height: 120,
-                    child: ListView(
+                    child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: [
-                        _buildVehicleTypeCard(controller, "Electric", AppImageAsset.electric),
-                        _buildVehicleTypeCard(controller, "Pickup", AppImageAsset.pickup),
-                        _buildVehicleTypeCard(controller, "SUV", AppImageAsset.suv),
-                        _buildVehicleTypeCard(controller, "Hatchback", AppImageAsset.hatchback),
-                        _buildVehicleTypeCard(controller, "Sedan", AppImageAsset.sedan),
-                      ],
+                      itemCount: controller.vehicles.length,
+                      itemBuilder: (context, index) {
+                        final vehicle = controller.vehicles[index];
+                        return _buildVehicleCard(controller, vehicle, context);
+                      },
                     ),
                   ),
                   const SizedBox(height: 20),
 
-                  CustonTextFormAuth(
-                    isNumber: false,
-                    valid: (val) => validInput(val!, 3, 20, "plate_number"),
-                    mycontroller: controller.plate_number,
-                    hinttext: "Enter vehicle plate",
-                    iconData: FontAwesome.cab,
-                    labeltext: "Plate",
-                  ),
-                  const SizedBox(height: 10),
-                  CustonTextFormAuth(
-                    isNumber: false,
-                    valid: (val) => validInput(val!, 3, 35, "vehicle_desc"),
-                    mycontroller: controller.vehicle_desc,
-                    hinttext: "Enter vehicle description",
-                    iconData: Icons.description,
-                    labeltext: "Description",
-                  ),
-                  const SizedBox(height: 20),
                   Center(
                     child:
                     CustomElevatedButton(
-                      radius: 25.0,
-                      text: "Add Vehicle",
+                      radius:25.0,
+                      text: "Reserve Spot",
                       icon: Icons.directions_car,
                       onPressed: () {
-                        if (controller.vehicle_type.text.isEmpty) {
+                        if (controller.vehicle_id.text.isEmpty) {
                           Get.snackbar(
                             "Error",
-                            "You must select a vehicle type.",
+                            "Please select a vehicle to reserve the spot.",
                             backgroundColor: Colors.redAccent,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.BOTTOM,
@@ -116,11 +98,10 @@ void AddVehicleBottomSheet(BuildContext context) {
                             duration: const Duration(seconds: 3),
                           );
                         } else {
-                          controller.AddVehicle();
+                          controller.addreservation(parkig_id );
                         }
                       },
                     )
-                    ,
                   ),
                 ],
               ),
@@ -132,7 +113,6 @@ void AddVehicleBottomSheet(BuildContext context) {
     isScrollControlled: true,
     elevation: 10,
     shape: const RoundedRectangleBorder(
-
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(42),
         topRight: Radius.circular(42),
@@ -141,22 +121,24 @@ void AddVehicleBottomSheet(BuildContext context) {
   );
 }
 
-Widget _buildVehicleTypeCard(VehiclesControllerImp controller, String type, String imageAsset) {
+Widget _buildVehicleCard(ParkingLotControllerImp controller, vehicle, BuildContext context) {
   return GestureDetector(
     onTap: () {
-      controller.vehicle_type.text = type;
+      controller.vehicle_id.text = vehicle.vehicleId.toString();
       controller.update();
     },
     child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       width: 115,
       decoration: BoxDecoration(
-        color: controller.vehicle_type.text == type
+        color: controller.vehicle_id.text == vehicle.vehicleId.toString()
             ? AppColor.primaryColor.withOpacity(0.2)
             : AppColor.backgroundcolor,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: controller.vehicle_type.text == type ? AppColor.primaryColor : Colors.grey,
+          color: controller.vehicle_id.text == vehicle.vehicleId.toString()
+              ? AppColor.primaryColor
+              : Colors.grey,
           width: 2,
         ),
         boxShadow: [
@@ -170,27 +152,42 @@ Widget _buildVehicleTypeCard(VehiclesControllerImp controller, String type, Stri
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Stack(
-            children: [
-              Image.asset(
-                imageAsset,
-                width: 99,
-                height: 99,
-                fit: BoxFit.cover,
-              ),
-              if (controller.vehicle_type.text == type)
-                const Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Icon(
-                    Icons.check_circle,
-                    color: AppColor.primaryColor,
-                  ),
-                ),
-            ],
+          Image.asset(
+            _getVehicleImage(vehicle.vehicleType),
+            width: 73,
+            height: 73,
+            fit: BoxFit.cover,
+          ),
+          Text(
+            vehicle.plateNumber ?? 'Unknown',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+          Text(
+            vehicle.vehicleDesc ?? '',
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),
     ),
   );
+}
+
+String _getVehicleImage(String? type) {
+  switch (type) {
+    case 'SUV':
+      return AppImageAsset.suv;
+    case 'Electric':
+      return AppImageAsset.electric;
+    case 'Hatchback':
+      return AppImageAsset.hatchback;
+    case 'Sedan':
+      return AppImageAsset.sedan;
+    case 'Pickup':
+      return AppImageAsset.pickup;
+    default:
+      return AppImageAsset.splash;
+  }
 }
