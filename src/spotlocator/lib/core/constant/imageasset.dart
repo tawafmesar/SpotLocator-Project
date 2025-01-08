@@ -1,9 +1,7 @@
 class AppImageAsset {
-
   static const String rootImages = "assets/images";
 
-
-  static const String logo                  = "$rootImages/logo.png" ;
+  static const String logo = "$rootImages/logo.png";
 
   static const String rootLottie = "assets/lottie";
 
@@ -15,7 +13,6 @@ class AppImageAsset {
 
   static const String server = "$rootLottie/server.json";
 
-
   static const String splash = "$rootImages/splash.gif";
 
   static const String electric = "$rootImages/Electric.png";
@@ -24,9 +21,5 @@ class AppImageAsset {
   static const String hatchback = "$rootImages/Hatchback.png";
   static const String pickup = "$rootImages/Pickup.png";
 
-
-
-
-
+  static const String profile = "$rootImages/profile.jpg";
 }
-

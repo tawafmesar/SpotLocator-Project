@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotlocator/view/screen/parkinglots_table.dart';
+import 'package:spotlocator/view/screen/profile.dart';
 import 'package:spotlocator/view/screen/vehicle.dart';
 import '../../core/constant/color.dart';
 import '../widget/custom_app_bar.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Center(child: Text('Home Page', style: TextStyle(fontSize: 24))),
     ParkinglotsTable(),
     VehicleScreen(),
-    Center(child: Text('Profile Page', style: TextStyle(fontSize: 24))),
+    ProfileScreen(),
   ];
 
   @override
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Vehicles',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(FontAwesomeIcons.userAstronaut),
               label: 'Profile',
             ),
           ],
