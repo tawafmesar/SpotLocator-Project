@@ -55,7 +55,7 @@ class VehicleScreen extends StatelessWidget {
 
                           final backgroundColor = index % 2 == 0
                               ? const Color(0xFF9CC5FF)
-                              : const Color(0xFF80A4FF);
+                              : const Color(0xFF6B92F6);
 
                           return Dismissible(
                             key: UniqueKey(),
@@ -252,7 +252,7 @@ class VehicleScreen extends StatelessWidget {
       case 'Electric':
         return AppImageAsset.electric;
       case 'Hatchback':
-        return AppImageAsset.splash;
+        return AppImageAsset.hatchback;
       case 'Sedan':
         return AppImageAsset.sedan;
       case 'Pickup':

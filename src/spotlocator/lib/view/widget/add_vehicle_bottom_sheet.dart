@@ -7,6 +7,7 @@ import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
 import '../../core/functions/validinput.dart';
 import '../widget/auth/customtextformauth.dart';
+import 'custom_elevated_button.dart';
 
 void AddVehicleBottomSheet(BuildContext context) {
   Get.bottomSheet(
@@ -97,55 +98,26 @@ void AddVehicleBottomSheet(BuildContext context) {
                     labeltext: "Description",
                   ),
                   const SizedBox(height: 20),
-
                   Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                          stops: [0.4, 0.8],
-                          colors: [
-                            Color(0xFF008FFF),
-                            Color(0xFF0062CA),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (controller.vehicle_type.text.isEmpty) {
-                            Get.snackbar(
-                              "Error",
-                              "You must select a vehicle type.",
-                              backgroundColor: Colors.redAccent,
-                              colorText: Colors.white,
-                              snackPosition: SnackPosition.BOTTOM,
-                              margin: const EdgeInsets.all(10),
-                              duration: const Duration(seconds: 3),
-                            );
-                          } else {
-                            controller.AddVehicle();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          elevation: 8,
-                          backgroundColor: Colors.transparent, // Make button background transparent
-                          shadowColor: Colors.transparent, // Remove shadow to show gradient clearly
-                        ),
-                        child: const Text(
-                          "Add Vehicle",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                    child:
+                    CustomElevatedButton(
+                      text: "Add Vehicle",
+                      icon: Icons.directions_car,
+                      onPressed: () {
+                        if (controller.vehicle_type.text.isEmpty) {
+                          Get.snackbar(
+                            "Error",
+                            "You must select a vehicle type.",
+                            backgroundColor: Colors.redAccent,
+                            colorText: Colors.white,
+                            snackPosition: SnackPosition.BOTTOM,
+                            margin: const EdgeInsets.all(10),
+                            duration: const Duration(seconds: 3),
+                          );
+                        } else {
+                          controller.AddVehicle();
+                        }
+                      },
                     )
                     ,
                   ),
