@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:spotlocator/view/widget/custom_drawer.dart';
-import '../../controller/parkinglot_controller.dart';
-import '../../controller/vehicle_controller.dart';
-import '../../core/class/handlingdataview.dart';
-import '../../core/constant/color.dart';
 import '../../linkapi.dart';
 import '../widget/book_spot_bottom_sheet.dart';
 import '../widget/custom_app_bar.dart';
@@ -23,9 +19,6 @@ class ReservationScreen extends StatefulWidget {
 class _ParkinglotsTableState extends State<ReservationScreen> {
   @override
   Widget build(BuildContext context) {
-    Get.put(VehiclesControllerImp());
-    final controller = Get.put(ParkingLotControllerImp());
-
     return Scaffold(
         appBar: CustomAppBar(
           title: 'Reservation',
