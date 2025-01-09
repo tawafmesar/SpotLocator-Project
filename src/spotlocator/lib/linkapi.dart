@@ -1,16 +1,14 @@
 class AppLink {
-
-  static const String server = "http://10.0.2.2/app/SpotLocator-Project/src/backend/";
+  static const String server =
+      "http://10.0.2.2/app/SpotLocator-Project/src/backend/";
 
   static const String test = "$server/test.php";
-  static const String imagesstatic = "$server/upload" ;
-
+  static const String imagesstatic = "$server/upload";
 
   static const String viewcategories = "$server/categories.php";
 
-  static const String imagestCategories = "$imagesstatic/categories" ;
+  static const String imagestCategories = "$imagesstatic/categories";
 // ================================= Auth ========================== //
-
 
   static const String signUp = "$server/auth/signup.php";
   static const String login = "$server/auth/login.php";
@@ -21,32 +19,25 @@ class AppLink {
 // ================================= ForgetPassword ========================== //
 
   static const String checkEmail = "$server/forgetpassword/checkemail.php";
-  static const String resetPassword = "$server/forgetpassword/resetpassword.php";
-  static const String verifycodeforgetpassword = "$server/forgetpassword/verifycode.php";
-
-
+  static const String resetPassword =
+      "$server/forgetpassword/resetpassword.php";
+  static const String verifycodeforgetpassword =
+      "$server/forgetpassword/verifycode.php";
 
 // ================================= Vehicle ========================== //
 
-  static const String vehicleview = "$server/vehicle/view.php"  ;
-  static const String vehicleAdd = "$server/vehicle/add.php"  ;
+  static const String vehicleview = "$server/vehicle/view.php";
+  static const String vehicleAdd = "$server/vehicle/add.php";
 
-
-  static const String vehicleactive = "$server/vehicle/active.php"  ;
-  static const String vehicleremove = "$server/vehicle/remove.php"  ;
-
+  static const String vehicleactive = "$server/vehicle/active.php";
+  static const String vehicleremove = "$server/vehicle/remove.php";
 
   // ================================= parkingspot ========================== //
 
+  static const String viewparkinglot = "$server/viewparkinglot.php";
 
-  static const String viewparkinglot = "$server/viewparkinglot.php"  ;
+  static const String addreservation = "$server/reservation/addreservation.php";
 
-
-
-  static const String addreservation = "$server/reservation/addreservation.php"  ;
-
-
-
-
-
+  static const String viewreservation =
+      "$server/reservation/viewreservation.php";
 }
