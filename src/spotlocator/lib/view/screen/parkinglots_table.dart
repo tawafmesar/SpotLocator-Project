@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:spotlocator/view/widget/custom_drawer.dart';
 import '../../controller/parkinglot_controller.dart';
 import '../../controller/vehicle_controller.dart';
 import '../../core/class/handlingdataview.dart';
@@ -34,10 +35,12 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
             onPressed: () async {
               controller.buttumupdate();
             },
-            icon: const FaIcon(FontAwesomeIcons.arrowsRotate, color: Colors.white),
+            icon: const FaIcon(FontAwesomeIcons.arrowsRotate,
+                color: Colors.white),
           ),
         ],
       ),
+      drawer: CustomDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const ScrollPhysics(),
@@ -73,7 +76,8 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          const Icon(Icons.filter_list, color: AppColor.primaryColor, size: 20),
+                          const Icon(Icons.filter_list,
+                              color: AppColor.primaryColor, size: 20),
                           const SizedBox(width: 10),
 
                           GestureDetector(
@@ -82,7 +86,8 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                             },
                             child: Container(
                               margin: const EdgeInsets.only(right: 10),
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
                               decoration: BoxDecoration(
                                 color: controller.selectedDeptId == null
                                     ? AppColor.primaryColor
@@ -103,16 +108,20 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
 
                           // Department Filters
                           ...controller.departments.map((dept) {
-                            bool isSelected = controller.selectedDeptId == dept.deptId;
+                            bool isSelected =
+                                controller.selectedDeptId == dept.deptId;
                             return GestureDetector(
                               onTap: () {
                                 controller.setSelectedDept(dept.deptId);
                               },
                               child: Container(
                                 margin: const EdgeInsets.only(right: 10),
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: isSelected ? AppColor.primaryColor : Colors.grey[300],
+                                  color: isSelected
+                                      ? AppColor.primaryColor
+                                      : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Row(
@@ -120,7 +129,9 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                                     Text(
                                       dept.deptShort,
                                       style: TextStyle(
-                                        color: isSelected ? Colors.white : Colors.black,
+                                        color: isSelected
+                                            ? Colors.white
+                                            : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -173,11 +184,15 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                                       height: 140,
                                       width: 140,
                                       fit: BoxFit.cover,
-                                      imageUrl: "${AppLink.imagesstatic}/${parkingSpot.deptImage ?? ''}",
+                                      imageUrl:
+                                          "${AppLink.imagesstatic}/${parkingSpot.deptImage ?? ''}",
                                       placeholder: (context, url) =>
-                                      const Center(child: CircularProgressIndicator()),
+                                          const Center(
+                                              child:
+                                                  CircularProgressIndicator()),
                                       errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error, size: 30, color: Colors.red),
+                                          const Icon(Icons.error,
+                                              size: 30, color: Colors.red),
                                     ),
                                   ),
                                   Expanded(
@@ -185,25 +200,38 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                                       height: 140,
                                       padding: const EdgeInsets.all(12),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
-                                              const Icon(Icons.location_on, size: 20, color: AppColor.primaryColor),
+                                              const Icon(Icons.location_on,
+                                                  size: 20,
+                                                  color: AppColor.primaryColor),
                                               const SizedBox(width: 5),
-                                               Text(
+                                              Text(
                                                 'Spot : ',
-                                                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                                  color: AppColor.primaryColor,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall!
+                                                    .copyWith(
+                                                      color:
+                                                          AppColor.primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                               ),
                                               Text(
                                                 parkingSpot.spotName ?? 'N/A',
-                                                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                                  color: AppColor.primaryColor,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall!
+                                                    .copyWith(
+                                                      color:
+                                                          AppColor.primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
                                               ),
                                             ],
                                           ),
@@ -223,9 +251,10 @@ class _ParkinglotsTableState extends State<ParkinglotsTable> {
                                               onPressed: () {
                                                 controller.vehicle_id.clear();
                                                 showBottomSheetBoxSpot(
-                                                    context, parkingSpot.parkingspotId.toString()
-                                                );
-                                              } ,
+                                                    context,
+                                                    parkingSpot.parkingspotId
+                                                        .toString());
+                                              },
                                               icon: Icons.book_online,
                                               text: 'Book Now',
                                             ),

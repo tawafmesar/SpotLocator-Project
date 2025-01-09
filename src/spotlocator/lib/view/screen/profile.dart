@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:spotlocator/view/widget/custom_app_bar.dart';
 import 'package:spotlocator/view/widget/custom_elevated_button.dart';
+import 'package:spotlocator/view/widget/custom_drawer.dart';
 import '../../controller/profile_controller.dart';
 import '../../core/constant/color.dart';
 import '../../core/constant/imageasset.dart';
@@ -21,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
         title: 'Profile',
         icon: FontAwesomeIcons.userAstronaut,
       ),
+      drawer: CustomDrawer(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: GetBuilder<ProfileScreenControllerImp>(

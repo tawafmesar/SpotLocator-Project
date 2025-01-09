@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotlocator/view/screen/parkinglots_table.dart';
-import 'package:spotlocator/view/screen/profile.dart';
+import 'package:spotlocator/view/screen/reservation.dart';
 import 'package:spotlocator/view/screen/vehicle.dart';
 import '../../core/constant/color.dart';
 import '../widget/custom_app_bar.dart';
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Center(child: Text('Home Page', style: TextStyle(fontSize: 24))),
     ParkinglotsTable(),
     VehicleScreen(),
-    ProfileScreen(),
+    ReservationScreen(),
   ];
 
   @override
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_parking),
+              icon: Icon(FontAwesomeIcons.squareParking),
               label: 'Parking',
             ),
             BottomNavigationBarItem(
@@ -86,8 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Vehicles',
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.userAstronaut),
-              label: 'Profile',
+              icon: Icon(FontAwesomeIcons.calendarCheck),
+              label: 'Reservation',
             ),
           ],
         ),
