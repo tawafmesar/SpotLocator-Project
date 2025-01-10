@@ -9,15 +9,14 @@ abstract class ReservationController extends GetxController {}
 
 class ReservationControllerImp extends ReservationController {
   MyServices myServices = Get.find();
-
   String? users_id;
   StatusRequest statusRequest = StatusRequest.none;
-
   ReservationData reservationData = ReservationData(Get.find());
-
-  List Reservation = [];
-
   List<reservation_model> data = [];
+  List<reservation_model> filteredData = [];
+
+  String searchQuery = '';
+  int? selectedStatus;
 
   @override
   void onInit() {
@@ -27,27 +26,46 @@ class ReservationControllerImp extends ReservationController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   getReservationData() async {
     data.clear();
     statusRequest = StatusRequest.loading;
     var response = await reservationData.getdata(users_id!);
-    print("=============================== Controller $response ");
     statusRequest = handlingData(response);
-    if (StatusRequest.success == statusRequest) {
-      if (response['status'] == "success") {
-        data = (response['data'] as List<dynamic>)
-            .map((e) => reservation_model.fromJson(e as Map<String, dynamic>))
+    if (statusRequest == StatusRequest.success) {
+      if (response['status'] == 'success') {
+        data = (response['data'] as List)
+            .map((e) => reservation_model.fromJson(e))
             .toList();
-        print(data);
+        applyFilters();
       } else {
         statusRequest = StatusRequest.failure;
       }
     }
+    update();
+  }
+
+  void applyFilters() {
+    filteredData = data.where((reservation) {
+      final matchesSearch = searchQuery.isEmpty ||
+          (reservation.parkingSpotName != null &&
+              reservation.parkingSpotName!
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase()));
+      final matchesStatus = selectedStatus == null ||
+          reservation.reservationStatus == selectedStatus;
+      return matchesSearch && matchesStatus;
+    }).toList();
+  }
+
+  void setSearchQuery(String query) {
+    searchQuery = query;
+    applyFilters();
+    update();
+  }
+
+  void setSelectedStatus(int? status) {
+    selectedStatus = status;
+    applyFilters();
     update();
   }
 

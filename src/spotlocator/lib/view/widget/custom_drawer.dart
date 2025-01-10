@@ -9,7 +9,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileScreenControllerImp controller =
-        Get.put(ProfileScreenControllerImp());
+    Get.put(ProfileScreenControllerImp());
 
     return Drawer(
       backgroundColor: AppColor.white,
@@ -36,10 +36,11 @@ class CustomDrawer extends StatelessWidget {
                 bottomRight: Radius.circular(80),
               ),
             ),
-            child: Column(
+            child: Stack(
               children: [
                 Positioned(
                   top: 10,
+                  right: 10,
                   child: IconButton(
                     icon: const Icon(Icons.close, color: Colors.white),
                     onPressed: () {
@@ -47,45 +48,49 @@ class CustomDrawer extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 10),
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(AppImageAsset.profile),
-                ),
-                const SizedBox(height: 10),
-                controller.username != null
-                    ? Text(
-                        controller.username!,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                Column(
+                  children: [
+                    const SizedBox(height: 50), // Adjust for IconButton spacing
+                    const CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage(AppImageAsset.profile),
+                    ),
+                    const SizedBox(height: 10),
+                    controller.username != null
+                        ? Text(
+                      controller.username!,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    )
+                        : _shimmerPlaceholder(150, 20),
+                    const SizedBox(height: 5),
+                    controller.email != null
+                        ? Text(
+                      controller.email!,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                    )
+                        : _shimmerPlaceholder(200, 16),
+                    const SizedBox(height: 20),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Text(
+                        'Simplify your parking with SpotLocator. Find, reserve, and manage parking spots effortlessly.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
                           color: Colors.white,
                         ),
-                      )
-                    : _shimmerPlaceholder(150, 20),
-                const SizedBox(height: 5),
-                controller.email != null
-                    ? Text(
-                        controller.email!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                        ),
-                      )
-                    : _shimmerPlaceholder(200, 16),
-                const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text(
-                    'Simplify your parking with SpotLocator. Find, reserve, and manage parking spots effortlessly.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 40),
               ],
             ),
           ),

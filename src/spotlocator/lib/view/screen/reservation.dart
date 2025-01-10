@@ -18,10 +18,10 @@ class ReservationScreen extends StatefulWidget {
   const ReservationScreen({Key? key}) : super(key: key);
 
   @override
-  State<ReservationScreen> createState() => _ParkinglotsTableState();
+  State<ReservationScreen> createState() => _ReservationScreenState();
 }
 
-class _ParkinglotsTableState extends State<ReservationScreen> {
+class _ReservationScreenState extends State<ReservationScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ReservationControllerImp());
@@ -49,6 +49,44 @@ class _ParkinglotsTableState extends State<ReservationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                CupertinoTextField(
+                  prefix: const Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Icon(Icons.search, color: AppColor.primaryColor),
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  placeholder: 'Search Reservations',
+                  style: const TextStyle(color: AppColor.primaryColor),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(133, 156, 197, 255),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  onChanged: (value) {
+                    controller.setSearchQuery(value);
+                  },
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Icon(Icons.filter_list, color: AppColor.primaryColor),
+                    const SizedBox(width: 10),
+                    DropdownButton<int?>(
+                      value: controller.selectedStatus,
+                      hint: const Text('Filter by Status'),
+                      items: const [
+                        DropdownMenuItem<int?>(value: null, child: Text('All')),
+                        DropdownMenuItem<int>(value: 0, child: Text('Pending')),
+                        DropdownMenuItem<int>(
+                            value: 1, child: Text('Checkout')),
+                        DropdownMenuItem<int>(
+                            value: 2, child: Text('Canceled')),
+                      ],
+                      onChanged: (value) {
+                        controller.setSelectedStatus(value);
+                      },
+                    ),
+                  ],
+                ),
                 GetBuilder<ReservationControllerImp>(
                   builder: (controller) => HandlingDataView(
                     statusRequest: controller.statusRequest,
@@ -59,9 +97,9 @@ class _ParkinglotsTableState extends State<ReservationScreen> {
                           MediaQuery.of(context).padding.bottom -
                           200,
                       child: ListView.builder(
-                        itemCount: controller.data.length,
+                        itemCount: controller.filteredData.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final reservation = controller.data[index];
+                          final reservation = controller.filteredData[index];
                           final backgroundColor = index % 2 == 0
                               ? const Color(0xFF9CC5FF)
                               : const Color(0xFF6B92F6);
