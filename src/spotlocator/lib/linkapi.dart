@@ -36,8 +36,13 @@ class AppLink {
 
   static const String viewparkinglot = "$server/viewparkinglot.php";
 
+  // ================================= Eeservation ========================== //
+
   static const String addreservation = "$server/reservation/addreservation.php";
 
   static const String viewreservation =
+      "$server/reservation/viewreservation.php";
+
+  static const String cancelreservation =
       "$server/reservation/viewreservation.php";
 }
