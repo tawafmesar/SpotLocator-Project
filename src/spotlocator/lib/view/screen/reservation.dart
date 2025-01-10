@@ -27,46 +27,116 @@ class _ParkinglotsTableState extends State<ReservationScreen> {
     final controller = Get.put(ReservationControllerImp());
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: 'Reservation',
-          icon: FontAwesomeIcons.calendarCheck,
-          actions: [
-            IconButton(
-              onPressed: () async {
-                controller.getReservationData();
-              },
-              icon: const FaIcon(FontAwesomeIcons.arrowsRotate,
-                  color: Colors.white),
-            ),
-          ],
-        ),
-        drawer: CustomDrawer(),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            physics: const ScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GetBuilder<ReservationControllerImp>(
-                    builder: (controller) => HandlingDataView(
-                      statusRequest: controller.statusRequest,
-                      widget: SizedBox(
-                        height: MediaQuery.of(context).size.height -
-                            AppBar().preferredSize.height -
-                            MediaQuery.of(context).padding.top -
-                            MediaQuery.of(context).padding.bottom -
-                            200,
-                        child: ListView.builder(
-                          itemCount: controller.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final reservation = controller.data[index];
-                            final backgroundColor = index % 2 == 0
-                                ? const Color(0xFF9CC5FF)
-                                : const Color(0xFF6B92F6);
+      appBar: CustomAppBar(
+        title: 'Reservation',
+        icon: FontAwesomeIcons.calendarCheck,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              controller.getReservationData();
+            },
+            icon: const FaIcon(FontAwesomeIcons.arrowsRotate,
+                color: Colors.white),
+          ),
+        ],
+      ),
+      drawer: CustomDrawer(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GetBuilder<ReservationControllerImp>(
+                  builder: (controller) => HandlingDataView(
+                    statusRequest: controller.statusRequest,
+                    widget: SizedBox(
+                      height: MediaQuery.of(context).size.height -
+                          AppBar().preferredSize.height -
+                          MediaQuery.of(context).padding.top -
+                          MediaQuery.of(context).padding.bottom -
+                          200,
+                      child: ListView.builder(
+                        itemCount: controller.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final reservation = controller.data[index];
+                          final backgroundColor = index % 2 == 0
+                              ? const Color(0xFF9CC5FF)
+                              : const Color(0xFF6B92F6);
 
-                            return Card(
+                          return Dismissible(
+                            key: UniqueKey(),
+                            direction: DismissDirection.endToStart,
+                            confirmDismiss: (direction) async {
+                              if (reservation.reservationStatus != 0) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Action Not Allowed'),
+                                      content: const Text(
+                                        'The cancel action is only allowed for pending reservations. Other statuses cannot be canceled.',
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                return false;
+                              }
+
+                              bool? confirm = await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Cancel Reservation'),
+                                    content: const Text(
+                                        'Are you sure you want to cancel this reservation?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
+                                        child: const Text('No'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        child: const Text('Yes'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return confirm;
+                            },
+                            onDismissed: (direction) {
+                              controller
+                                  .cancel(reservation.reservationId.toString());
+                              Get.snackbar(
+                                "Reservation Canceled",
+                                "Reservation ${reservation.reservationId} has been canceled.",
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                                snackPosition: SnackPosition.BOTTOM,
+                                duration: const Duration(seconds: 2),
+                              );
+                            },
+                            background: Container(
+                              color: Colors.red,
+                              alignment: Alignment.centerRight,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: const Icon(Icons.cancel,
+                                  color: Colors.white, size: 30),
+                            ),
+                            child: Card(
                               clipBehavior: Clip.antiAlias,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
@@ -193,17 +263,19 @@ class _ParkinglotsTableState extends State<ReservationScreen> {
                                   ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _buildStatusWidget(int? reservationStatus) {
@@ -222,7 +294,7 @@ class _ParkinglotsTableState extends State<ReservationScreen> {
         statusIcon = Icons.check_circle;
         backgroundColor = Colors.green.shade100;
         break;
-      case 3:
+      case 2:
         statusText = 'Canceled';
         statusIcon = Icons.cancel;
         backgroundColor = Colors.red.shade100;
@@ -271,19 +343,6 @@ class _ParkinglotsTableState extends State<ReservationScreen> {
         ],
       ),
     );
-  }
-
-  Color _getStatusColor(int? reservationStatus) {
-    switch (reservationStatus) {
-      case 0:
-        return Colors.orange;
-      case 1:
-        return Colors.green;
-      case 2:
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
   }
 
   String _getVehicleImage(String? type) {
