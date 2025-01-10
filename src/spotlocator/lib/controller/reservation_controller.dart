@@ -62,4 +62,25 @@ class ReservationControllerImp extends ReservationController {
     Get.back();
     Get.back();
   }
+
+  @override
+  cancel(String id) async {
+    print("=============================== id $id ");
+    print(id);
+    statusRequest = StatusRequest.loading;
+    var response = await reservationData.canceldata(id);
+    print("=============================== Controller $response ");
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      if (response['status'] == "success") {
+        _navigateTobackScreen(
+            "Success", "The Reservation was canceled successfully");
+        await getReservationData();
+        update();
+      } else {
+        statusRequest = StatusRequest.failure;
+      }
+    }
+    update();
+  }
 }
